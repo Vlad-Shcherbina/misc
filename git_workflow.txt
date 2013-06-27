@@ -10,7 +10,7 @@ git config merge.defaultToUpstream true
     [hack]
     git add, git commit (or just git gui)
     
-    # if there are changes that did not fit into commits
+    # if there are changes that did not fit into commits:
         git stash
     
     git pull
@@ -24,5 +24,5 @@ git config merge.defaultToUpstream true
             
     git push
     
-    # if there were changes stashed
+    # if there were changes stashed:
         git stash pop
