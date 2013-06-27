@@ -10,6 +10,9 @@ git config merge.defaultToUpstream true
     [hack]
     git add, git commit (or just git gui)
     
+    # optional: stash changes that are not commited
+    git stash
+    
     git pull
     # if you got "CONFLICT (content): Merge conflict in...":
         # merge is justified
@@ -20,3 +23,6 @@ git config merge.defaultToUpstream true
             git add, git commit (or git gui)
             
     git push
+    
+    # optional
+    git stash pop
