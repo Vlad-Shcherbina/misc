@@ -1,0 +1,22 @@
+# initialization
+git clone ...
+
+git config branch.master.rebase true
+git config merge.defaultToUpstream true
+
+# while True:
+    git pull
+    
+    [hack]
+    git add, git commit (or just git gui)
+    
+    git pull
+    # if you got "CONFLICT (content): Merge conflict in...":
+        # merge is justified
+        git rebase --abort
+        git merge
+        # if there are conflicts (which is likely):
+            [resolve them]
+            git add, git commit (or git gui)
+            
+    git push
