@@ -4,4 +4,4 @@ Column1, Column2, zzz
 ,,q
 a,b,
 a,"comma:,",c
-"qqqqqq", 'test', "\n"
+"qq""qqqq", 'test', "\n"
