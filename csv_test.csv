@@ -3,4 +3,4 @@ Column1, Column2, zzz
 4, 5, zzz
 ,,q
 a,b,
-a,b,c,d
+a,"comma:,",c
