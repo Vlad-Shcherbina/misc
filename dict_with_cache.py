@@ -33,4 +33,4 @@ class DictWithCache(object):
             self.cached_adder(value)
         else:
             self.cached_node.value = value
-        self.cached_term = None
+        self.cached_key = None
