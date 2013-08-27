@@ -19,7 +19,7 @@ class DictWithCache(object):
 
     def __contains__(self, key):
         self.update_cache(key)
-        return node is not None
+        return self.cached_node is not None
 
     def __getitem__(self, key):
         self.update_cache(key)
@@ -33,3 +33,4 @@ class DictWithCache(object):
             self.cached_adder(value)
         else:
             self.cached_node.value = value
+        self.cached_term = None
