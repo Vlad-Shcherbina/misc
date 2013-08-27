@@ -31,6 +31,10 @@ class DictWithCache(object):
         self.update_cache(key)
         if node is None:
             self.cached_adder(value)
+            
+            # TODO: Instead of invalidating cache completely,
+            # make cached_adder return new node and use it
+            # to update cache.
+            self.cached_key = None
         else:
             self.cached_node.value = value
-        self.cached_key = None
