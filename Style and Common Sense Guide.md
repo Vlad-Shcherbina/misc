@@ -26,4 +26,4 @@ else:
     ...
 ```
 
-### Working with multiple (especially dependent) feature branches at the same time leads to all kinds of errors.
+#### Working with multiple (especially dependent) feature branches at the same time leads to all kinds of errors.
