@@ -1,7 +1,7 @@
-For non-trivial regexes, add comment with an example of what they are supposed to parse.
+#### For non-trivial regexes, add comment with an example of what they are supposed to parse.
 
 
-Conditions in else-if chains should be uniform.
+#### Conditions in else-if chains should be uniform.
 
 Good:
 ```
