@@ -4,7 +4,7 @@
 #### Conditions in else-if chains should be uniform.
 
 Good:
-```
+```python
 if x < 10:
     ...
 elif x < 20:
@@ -13,7 +13,7 @@ elif x < 30:
     ...
 else:
     ...
-```
+```python
 Bad:
 ```
 if x < 10:
