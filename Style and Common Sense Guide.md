@@ -13,9 +13,9 @@ elif x < 30:
     ...
 else:
     ...
-```python
-Bad:
 ```
+Bad:
+```python
 if x < 10:
     ...
 elif y > 0:
