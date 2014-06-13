@@ -1,10 +1,11 @@
+%module sample
+
 %include "typemaps.i"
 %include "std_vector.i"
 %include "std_string.i"
 
 %template(IntVector) std::vector<int>;
 
-%module sample
 %{
 #include "sample.h"
 %}
