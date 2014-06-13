@@ -5,9 +5,7 @@ from cpp import sample
 if __name__ == '__main__':
     print sample.N
     print sample.square_float(2)
-
-    vec = sample.IntVector([1, 2, 3])
-    print list(sample.reverse(vec))
+    print sample.reverse([1, 2, 3])
 
     hz = sample.Hz()
     hz.a = 1
