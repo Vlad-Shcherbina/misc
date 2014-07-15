@@ -1,7 +1,7 @@
 """
 Nested contexts for log messages, kind of like NDC.
 
-See http://forumbgz.ru/ashowflat.php?Cat=&Board=prog&Number=11890088
+See http://forumbgz.ru/showflat.php?Cat=&Board=prog&Number=11890088
 """
 
 import logging
