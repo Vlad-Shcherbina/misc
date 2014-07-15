@@ -8,6 +8,9 @@ import logging
 import contextlib
 
 
+INDENT = '  '
+
+
 @contextlib.contextmanager
 def log_context(msg, *args):
     name = 'log_context'
@@ -16,6 +19,7 @@ def log_context(msg, *args):
     lno = None
     exc_info = None
     func = None
+    msg = INDENT * len(context_stack) + msg
     record = logging.LogRecord(name, level, fn, lno, msg, args, exc_info, func)
 
     context_stack.append(record)
@@ -50,7 +54,7 @@ class HandlerDecorator(object):
         if self.handler.filter(record):
             self.emit_contexts()
             old_msg = record.msg
-            record.msg = '  ' * len(context_stack) + old_msg
+            record.msg = INDENT * len(context_stack) + old_msg
             self.handler.emit(record)
             record.msg = old_msg
 
@@ -88,7 +92,8 @@ if __name__ == '__main__':
 
     logger.info('hello')
     try:
-        for i in range(1000):
-            process_bicycle(i)
+        with log_context('process all bicycles'):
+            for i in range(1000):
+                process_bicycle(i)
     except:
         logger.exception('unhandled exception')
