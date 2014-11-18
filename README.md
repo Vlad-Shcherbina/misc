@@ -1,6 +1,7 @@
 misc
 ====
 
+    git config --global diff.algorithm patience
 
     git config --global merge.conflictstyle diff3
 
