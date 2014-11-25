@@ -12,13 +12,17 @@ Hello world
 </form>
 <script>
     $("#input_id").autocomplete({
+      delay: 500,
       source: function(request, response) {
         setTimeout(function() {
           var result = [];
-          for (var i = 0; i < 5; i++) {
+          for (var i = 0; i < 50; i++) {
             var entry = {
               label: 'label' + request.term + i,
               value: i + request.term};
+            if (i == 3) {
+              entry.label += 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua';
+            }
             result.push(entry);
           }
           console.log(request.term);
