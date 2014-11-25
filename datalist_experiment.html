@@ -1,16 +1,35 @@
 <html>
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 </head>
 <body>
 Hello world
 <form>
-<input type=text name=hz1 list="datalist_id">
-<datalist id="datalist_id">
+<input id="input_id" type=text name=hz1 list="suggestions" autocomplete="off">
+<datalist id="suggestions">
   <option value=apple>Apple</option>
-  <option value=apricot>Apricot</option>
+  <option value="apricot"></option>
   <option value=avocado>Avocado (Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua)</option>
 </datalist>
 </form>
+
+
+<script>
+//$('#suggestions').empty().append('<option value=abbb>Abbb</option>')
+$('#input_id').on("input", function(e) {
+  var value = $(this).val()
+  setTimeout(function() {
+    console.log(value);
+    var sug = $('#suggestions');
+    sug.empty();
+    for (var i = 0; i < 5; i++) {
+      sug.append('<option value="'+value + 'z' + i + '">Abbb</option>')
+    }
+    $('#input_id').val(value);
+  }, 100);
+});
+</script>
+
 </body>
 </html>
