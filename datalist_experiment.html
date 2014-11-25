@@ -2,33 +2,31 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
+  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
 </head>
 <body>
 Hello world
-<form>
-<input id="input_id" type=text name=hz1 list="suggestions" autocomplete="off">
-<datalist id="suggestions">
-  <option value=apple>Apple</option>
-  <option value="apricot"></option>
-  <option value=avocado>Avocado (Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua)</option>
-</datalist>
+<form id="form_id">
+<input id="input_id" type=text name=hz1>
 </form>
-
-
 <script>
-//$('#suggestions').empty().append('<option value=abbb>Abbb</option>')
-$('#input_id').on("input", function(e) {
-  var value = $(this).val()
-  setTimeout(function() {
-    console.log(value);
-    var sug = $('#suggestions');
-    sug.empty();
-    for (var i = 0; i < 5; i++) {
-      sug.append('<option value="'+value + 'z' + i + '">Abbb</option>')
-    }
-    $('#input_id').val(value);
-  }, 100);
-});
+    $("#input_id").autocomplete({
+      source: function(request, response) {
+        setTimeout(function() {
+          var result = [];
+          for (var i = 0; i < 5; i++) {
+            var entry = {
+              label: 'label' + request.term + i,
+              value: i + request.term};
+            result.push(entry);
+          }
+          console.log(request.term);
+          console.log(result);
+          response(result);
+        }, 200);
+      }
+    });
 </script>
 
 </body>
