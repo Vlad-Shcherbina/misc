@@ -15,9 +15,11 @@ this.start = (canvas_id) ->
 
   prog = shaderProgram(gl,
     """
-    attribute vec2 pos;
+    attribute vec3 pos;
+    uniform mat3 mat;
     void main() {
-      gl_Position = vec4(pos, 0.0, 1.0);
+      vec3 q = mat * pos;
+      gl_Position = vec4(q, q.z + 1.0);
     }
     """,
     """
@@ -27,20 +29,45 @@ this.start = (canvas_id) ->
     """)
   gl.useProgram(prog)
 
-  vertices = new Float32Array([
-    0, 0
-    1, 0
-    -1, -1
-  ])
+  toMinkowskyHyperboloid = (x, y) ->
+    new Float32Array([x, y, Math.sqrt(x*x + y*y + 1)])
+
+  hyperShiftXMat = (dx) ->
+    mat = mat3.create()
+    mat[8] = mat[0] = Math.cosh(dx)
+    mat[2] = mat[6] = Math.sinh(dx)
+    mat
+
+  hyperShiftYMat = (dy) ->
+    mat = mat3.create()
+    mat[8] = mat[4] = Math.cosh(dy)
+    mat[5] = mat[7] = Math.sinh(dy)
+    mat
+
+  vertices = new Float32Array(3 * 3)
+  vertices.set(toMinkowskyHyperboloid(-0.2, -0.1), 0)
+  vertices.set(toMinkowskyHyperboloid(0.2, -0.1), 3)
+  vertices.set(toMinkowskyHyperboloid(0, 0.3), 6)
 
   buffer = gl.createBuffer()
   gl.bindBuffer(gl.ARRAY_BUFFER, buffer)
   gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW)
-  pos_attr = gl.getAttribLocation(prog, "pos")
-  gl.enableVertexAttribArray(pos_attr)
-  gl.vertexAttribPointer(pos_attr, 2, gl.FLOAT, false, 0, 0)
+  prog.pos_attr = gl.getAttribLocation(prog, "pos")
+  prog.mat_uniform = gl.getUniformLocation(prog, "mat")
+  gl.enableVertexAttribArray(prog.pos_attr)
+  gl.vertexAttribPointer(prog.pos_attr, 3, gl.FLOAT, false, 0, 0)
 
-  gl.drawArrays(gl.TRIANGLES, 0, 3)
+  for i in [-8..8]
+    for j in [-8..8]
+      mat = mat3.create()
+
+      mat3.rotate(mat, mat, 0.3)
+      mat3.mul(mat, mat, hyperShiftXMat(0.5 * i))
+      mat3.mul(mat, mat, hyperShiftYMat(0.5 * j))
+
+      gl.uniformMatrix3fv(prog.mat_uniform, false, mat)
+
+      gl.drawArrays(gl.TRIANGLES, 0, 3)
 
 
 shaderProgram = (gl, vs, fs) ->
