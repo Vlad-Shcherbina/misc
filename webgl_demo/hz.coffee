@@ -1,17 +1,14 @@
 ---
 ---
 
+global_angle = 0.0
+
 this.start = (canvas_id) ->
   canvas = document.getElementById(canvas_id)
   gl = canvas.getContext("webgl") or canvas.getContext("experimental-webgl")
   if not gl
     alert "Unable to initialize WebGL."
     return
-
-  gl.clearColor(0.0, 0.0, 0.0, 1.0)
-  gl.clear(gl.COLOR_BUFFER_BIT)
-
-  gl.viewport(0, 0, canvas.width, canvas.height)
 
   prog = shaderProgram(gl,
     """
@@ -29,21 +26,6 @@ this.start = (canvas_id) ->
     """)
   gl.useProgram(prog)
 
-  toMinkowskyHyperboloid = (x, y) ->
-    new Float32Array([x, y, Math.sqrt(x*x + y*y + 1)])
-
-  hyperShiftXMat = (dx) ->
-    mat = mat3.create()
-    mat[8] = mat[0] = Math.cosh(dx)
-    mat[2] = mat[6] = Math.sinh(dx)
-    mat
-
-  hyperShiftYMat = (dy) ->
-    mat = mat3.create()
-    mat[8] = mat[4] = Math.cosh(dy)
-    mat[5] = mat[7] = Math.sinh(dy)
-    mat
-
   vertices = new Float32Array(3 * 3)
   vertices.set(toMinkowskyHyperboloid(-0.2, -0.1), 0)
   vertices.set(toMinkowskyHyperboloid(0.2, -0.1), 3)
@@ -57,17 +39,28 @@ this.start = (canvas_id) ->
   gl.enableVertexAttribArray(prog.pos_attr)
   gl.vertexAttribPointer(prog.pos_attr, 3, gl.FLOAT, false, 0, 0)
 
-  for i in [-8..8]
-    for j in [-8..8]
-      mat = mat3.create()
+  render = () ->
+    requestAnimationFrame(render)
+    global_angle += 0.01
+    gl.viewport(0, 0, canvas.width, canvas.height)
 
-      mat3.rotate(mat, mat, 0.3)
-      mat3.mul(mat, mat, hyperShiftXMat(0.5 * i))
-      mat3.mul(mat, mat, hyperShiftYMat(0.5 * j))
+    gl.clearColor(0.0, 0.0, 0.0, 1.0)
+    gl.clear(gl.COLOR_BUFFER_BIT)
 
-      gl.uniformMatrix3fv(prog.mat_uniform, false, mat)
+    for i in [-8..8]
+      for j in [-8..8]
+        mat = mat3.create()
 
-      gl.drawArrays(gl.TRIANGLES, 0, 3)
+        mat3.rotate(mat, mat, global_angle)
+        mat3.mul(mat, mat, hyperShiftXMat(0.5 * i + Math.cos(global_angle)))
+        mat3.mul(mat, mat, hyperShiftYMat(0.5 * j))
+        mat3.rotate(mat, mat, global_angle)
+
+        gl.uniformMatrix3fv(prog.mat_uniform, false, mat)
+
+        gl.drawArrays(gl.TRIANGLES, 0, 3)
+
+  render()
 
 
 shaderProgram = (gl, vs, fs) ->
@@ -87,3 +80,21 @@ shaderProgram = (gl, vs, fs) ->
   if not gl.getProgramParameter(prog, gl.LINK_STATUS)
     throw "Could not link the shader program!"
   return prog
+
+
+# Hyperbolic geometry utils
+
+toMinkowskyHyperboloid = (x, y) ->
+  new Float32Array([x, y, Math.sqrt(x*x + y*y + 1)])
+
+hyperShiftXMat = (dx) ->
+  mat = mat3.create()
+  mat[8] = mat[0] = Math.cosh(dx)
+  mat[2] = mat[6] = Math.sinh(dx)
+  mat
+
+hyperShiftYMat = (dy) ->
+  mat = mat3.create()
+  mat[8] = mat[4] = Math.cosh(dy)
+  mat[5] = mat[7] = Math.sinh(dy)
+  mat
