@@ -15,6 +15,8 @@ make install
 # 'Ignoring ensurepip failure: pip 6.0.8 requires SSL/TLS', run
 #   sudo apt-get install libssl-dev
 
+cd ..
+
 # Finally,
 #   virtualenv -p localpython/bin/python3 MY_ENV_OR_WHATEVER
 # or better 
