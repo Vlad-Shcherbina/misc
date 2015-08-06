@@ -8,6 +8,9 @@ tar -zxvf Python-$VERSION.tgz
 CURRENT_PATH=$PWD
 cd Python-$VERSION
 
+# Some libraries to install first: 
+# http://askubuntu.com/questions/21547/what-are-the-packages-libraries-i-should-install-before-compiling-python-from-so
+
 ./configure --prefix=$CURRENT_PATH/localpython
 make
 make install
