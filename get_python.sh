@@ -2,16 +2,18 @@ set -ex
 
 # Dependencies, according to
 # http://askubuntu.com/questions/21547/what-are-the-packages-libraries-i-should-install-before-compiling-python-from-so
-sudo apt-get install 
-build-essential (obviously)
-libz-dev        (also pretty common and essential)
-libreadline-dev (or the Python prompt is crap)
-libncursesw5-dev
-libssl-dev
-libgdbm-dev
-libsqlite3-dev
-libbz2-dev
-liblzma-dev
+sudo apt-get \
+  build-essential \
+  libz-dev \
+  libreadline-dev \
+  libncursesw5-dev \
+  libssl-dev \
+  libgdbm-dev \
+  libsqlite3-dev \
+  libbz2-dev \
+  liblzma-dev \
+  tk-dev \
+  libdb-dev
 
 VERSION=3.5.0
 
