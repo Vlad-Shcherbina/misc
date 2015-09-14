@@ -1,15 +1,25 @@
 set -ex
 
-VERSION=3.4.3
+# Dependencies, according to
+# http://askubuntu.com/questions/21547/what-are-the-packages-libraries-i-should-install-before-compiling-python-from-so
+sudo apt-get install 
+build-essential (obviously)
+libz-dev        (also pretty common and essential)
+libreadline-dev (or the Python prompt is crap)
+libncursesw5-dev
+libssl-dev
+libgdbm-dev
+libsqlite3-dev
+libbz2-dev
+liblzma-dev
+
+VERSION=3.5.0
 
 curl -O --ssl-reqd https://www.python.org/ftp/python/$VERSION/Python-$VERSION.tgz
 tar -zxvf Python-$VERSION.tgz
 
 CURRENT_PATH=$PWD
 cd Python-$VERSION
-
-# Some libraries to install first: 
-# http://askubuntu.com/questions/21547/what-are-the-packages-libraries-i-should-install-before-compiling-python-from-so
 
 ./configure --prefix=$CURRENT_PATH/localpython
 make
