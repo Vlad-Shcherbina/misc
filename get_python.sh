@@ -2,7 +2,7 @@ set -ex
 
 # Dependencies, according to
 # http://askubuntu.com/questions/21547/what-are-the-packages-libraries-i-should-install-before-compiling-python-from-so
-sudo apt-get \
+sudo apt-get install --upgrade \
   build-essential \
   libz-dev \
   libreadline-dev \
