@@ -1,0 +1,33 @@
+path=server.py
+
+
+# adding
+git read-tree HEAD  # only if it's not initial commit
+newhash=$(git hash-object -w --path=$path hz.txt)
+git update-index --add --cacheinfo 0644 $newhash $path
+newtree=$(git write-tree)
+newcommit=$(git commit-tree $newtree -p HEAD -m 'file added to bare repo')
+git update-ref HEAD $newcommit
+
+
+# deleting
+git read-tree HEAD
+git rm --cached $path
+newtree=$(git write-tree)
+newcommit=$(git commit-tree $newtree -p HEAD -m 'file deleted from bare repo')
+git update-ref HEAD $newcommit
+
+
+# revert
+git update-ref HEAD HEAD~
+
+
+# initial commit
+git read-tree --empty
+newtree=$(git write-tree)
+newcommit=$(git commit-tree $newtree -m 'initial commit')
+git update-ref HEAD1 $newcommit
+
+
+# find unreferenced objects
+git prune --dry-run
