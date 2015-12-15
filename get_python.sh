@@ -15,7 +15,7 @@ sudo apt-get install --upgrade \
   tk-dev \
   libdb-dev
 
-VERSION=3.5.0
+VERSION=3.5.1
 
 curl -O --ssl-reqd https://www.python.org/ftp/python/$VERSION/Python-$VERSION.tgz
 tar -zxvf Python-$VERSION.tgz
