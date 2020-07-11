@@ -1,0 +1,21 @@
+<meta charset="utf-8">
+<link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
+<title>zone</title>
+<style>
+  body {
+    background-color: black;
+    margin: 0px;
+  }
+  #bg, #fg {
+    /* border: 1px solid grey; */
+    position: absolute;
+  }
+</style>
+
+<canvas id="bg"></canvas>
+<canvas id="fg"></canvas>
+
+<script type="module" src="main.js"></script>
+
+<!-- to receive keyboard input when embedded on itch.io -->
+<script>window.onload = function() { window.focus(); };</script>
